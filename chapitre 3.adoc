@@ -1,5 +1,4 @@
-
-Chapitre 3
+# Chapitre 3
 
 Un peu plus que compiler
 ------------------------
@@ -29,32 +28,24 @@ code qui semble nettement plus moderne, nous lançons fièrement la
 compilation par Maven, avant de tomber sur un message d'erreur fort
 désagréable :
 
-[INFO] -------------------------------------------------------------
-
-[ERROR] COMPILATION ERROR :
-
-[INFO] -------------------------------------------------------------
-
-[ERROR] D:\noubliepaslalistedescources\src\main\java\org\
-noubliepaslalistedescources\model\MesCourses.java:[3,66] diamond
-operator is not supported in -source 1.5
-
-[INFO] 1 error
-
-Le « diamond operator »link:#_ftn9[[9]], c'est en effet une évolution du
-langage Java proposée par Java 7. Maven ne serait-il compatible qu'avec
-Java 5 ? Les choses sont même bien pires que cela si on essaie de
-compiler notre projet avec Maven 2 :
-
-[INFO] Compilation failure
-
- 
-
-D:\noubliepaslalistedescources\src\main\java\org\
-noubliepaslalistedescources\model\MesCourses.java:[57,5] annotations are
-not supported in -source 1.3
-
-(use -source 5 or higher to enable annotations)
+  [INFO] -------------------------------------------------------------
+  [ERROR] COMPILATION ERROR :
+  [INFO] -------------------------------------------------------------
+  [ERROR] D:\noubliepaslalistedescources\src\main\java\org\
+  noubliepaslalistedescources\model\MesCourses.java:[3,66] diamond
+  operator is not supported in -source 1.5
+  [INFO] 1 error
+  Le « diamond operator »link:#_ftn9[[9]], c'est en effet une évolution du
+  langage Java proposée par Java 7. Maven ne serait-il compatible qu'avec
+  Java 5 ? Les choses sont même bien pires que cela si on essaie de
+  compiler notre projet avec Maven 2 :
+  [INFO] Compilation failure
+   
+  D:\noubliepaslalistedescources\src\main\java\org\
+  noubliepaslalistedescources\model\MesCourses.java:[57,5] annotations are
+  not supported in -source 1.3
+  
+  (use -source 5 or higher to enable annotations)
 
 Pardon ? Maven2 est compatible uniquement avec Java 1.3 ? Pas de
 panique, les choses sont plus subtiles que cela et, heureusement pour
@@ -126,31 +117,19 @@ nous vous encourageons à toujours définir explicitement ces valeurs.
 La modification des options par défaut d'un plugin s'effectue dans le
 fichier POM du projet, au sein de son bloc <build> :
 
-<build>
-
-    <plugins>
-
-        <plugin>
-
-            <groupId>org.apache.maven.plugins</groupId>
-
-            <artifactId>maven-compiler-plugin</artifactId>
-
-            <version>2.3.2</version>
-
-            <configuration>
-
-                <source>7</source>
-
-                <target>7</target>
-
-            </configuration>
-
-        </plugin>
-
-    </plugins>
-
-</build>
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>2.3.2</version>
+              <configuration>
+                  <source>7</source>
+                  <target>7</target>
+              </configuration>
+          </plugin>
+      </plugins>
+  </build>
 
 Chaque plugin peut ainsi être reconfiguré. Un plugin, comme tout
 artefact manipulé par Maven, est identifié par le triplet [identifiant
@@ -240,13 +219,10 @@ encore modifiable _via_ le -D sur la ligne de commande. Cela permet de
 définir en quelque sorte des valeurs par défaut applicables sur le
 projet et sur lui seul :
 
-<properties>
-
-    <maven.compiler.source>7</maven.compiler.source>
-
-    <maven.compiler.target>7</maven.compiler.target>
-
-</properties>
+  <properties>
+      <maven.compiler.source>7</maven.compiler.source>
+      <maven.compiler.target>7</maven.compiler.target>
+  </properties>
 
 La plupart des plugins Maven proposent cette option pour leurs
 principaux paramètres de configuration ; cependant, cette pratique n'est
@@ -347,29 +323,18 @@ Ces répertoires créés pour accueillir le code, il nous reste à déclarer
 le plugin Groovy dans notre POM. Sur l'exemple du plugin compiler, nous
 ajoutons :
 
-<build>
-
-    <plugins>
-
-        <plugin>
-
-            <groupId>org.codehaus.groovy.maven</groupId>
-
-            <artifactId>gmaven-plugin</artifactId>
-
-            <version>1.0</version>
-
-            <configuration>
-
-<!-- les valeurs par défaut nous conviennent très bien :) -->
-
-            </configuration>
-
-        </plugin>
-
-    </plugins>
-
-</build>
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>org.codehaus.groovy.maven</groupId>
+              <artifactId>gmaven-plugin</artifactId>
+              <version>1.0</version>
+              <configuration>
+  <!-- les valeurs par défaut nous conviennent très bien :) -->
+              </configuration>
+          </plugin>
+      </plugins>
+  </build>
 
 Astuce
 
@@ -415,37 +380,22 @@ projet, nous devons également préciser lequel (ou lesquels) de ces
 traitements unitaires nous souhaitons intégrer à la construction du
 projet.
 
-<build>
-
-    <plugins>
-
-        <plugin>
-
-            <groupId>org.codehaus.groovy.maven</groupId>
-
-            <artifactId>gmaven-plugin</artifactId>
-
-            <version>1.0</version>
-
-            <executions>
-
-                <execution>
-
-                    <goals>
-
-                        <goal>compile</goal>
-
-                    </goals>
-
-                </execution>
-
-             </executions>
-
-        </plugin>
-
-    </plugins>
-
-</build>
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>org.codehaus.groovy.maven</groupId>
+              <artifactId>gmaven-plugin</artifactId>
+              <version>1.0</version>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>compile</goal>
+                      </goals>
+                  </execution>
+               </executions>
+          </plugin>
+      </plugins>
+  </build>
 
 Un élément <execution> permet de définir les tâches définies par le
 plugin considéré que Maven devra exécuter.
@@ -510,37 +460,22 @@ que ça. Reste à faire tourner cet ovni issu de la galaxie Google dans un
 projet Maven ! Heureusement pour nous, d'autres ont eu le même souci et
 un plugin est disponible pour marier GWT avec notre projet.
 
-      <plugin>
-
-        <groupId>org.codehaus.mojo</groupId>
-
-        <artifactId>gwt-maven-plugin</artifactId>
-
-        <version>2.2.0</version>
-
-        <executions>
-
-          <execution>
-
-            <goals>
-
-              <goal>compile</goal>
-
-              <goal>generateAsync</goal>
-
-            </goals>
-
-          </execution>
-
-        </executions>
-
-        <configuration>
-
-          <extraJvmArgs>-Xmx512M</extraJvmArgs>
-
-        </configuration>
-
-      </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>gwt-maven-plugin</artifactId>
+          <version>2.2.0</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compile</goal>
+                <goal>generateAsync</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <extraJvmArgs>-Xmx512M</extraJvmArgs>
+          </configuration>
+        </plugin>
 
 Comme pour l'intégration de Groovy, nous n'avons au niveau du projet
 Maven qu'à ajouter l'identifiant exact du plugin utilisé, définir une
@@ -557,15 +492,11 @@ développement – au moins pour ceux d'entre nous qui utilisent Eclipse !
 Nous ajoutons cette tâche à notre execution, et nous lançons en toute
 confiance un mvn install :
 
-...
-
-[INFO] -----------------------------------------------------------------
-
-[INFO] BUILD SUCCESSFUL
-
-[INFO] -----------------------------------------------------------------
-
-INFO] Total time: 50 seconds
+  ...
+  [INFO] -----------------------------------------------------------------
+  [INFO] BUILD SUCCESSFUL
+  [INFO] -----------------------------------------------------------------
+  [INFO] Total time: 50 seconds
 
 Voilà qui est encourageant… mais pas grand chose de visible concernant
 notre application web ! Rien d'étonnant à cela : le lancement du serveur
@@ -766,39 +697,23 @@ de plugins. Il prend en paramètre les fichiers WSDL à traiter et les
 options de génération ; aussi plaçons-nous notre fichier WSDL dans un
 répertoire de ressources dédié à ce format : src/main/resources/wsdl.
 
-<plugin>
-
-   <groupId>org.apache.cxf</groupId>
-
-   <artifactId>cxf-codegen-plugin</artifactId>
-
-   <version>2.3.3</version>
-
-   <executions>
-
-     <execution>
-
-          <goals>
-
-            <goal>wsdl2java</goal>
-
-          </goals>
-
-     </execution>
-
-   </executions>
-
-   <configuration>
-
-     <defaultOptions>
-
-        <noAddressBinding>true</noAddressBinding>
-
-    </defaultOptions>
-
-   </configuration>
-
-</plugin>
+  <plugin>
+     <groupId>org.apache.cxf</groupId>
+     <artifactId>cxf-codegen-plugin</artifactId>
+     <version>2.3.3</version>
+     <executions>
+       <execution>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+       </execution>
+     </executions>
+     <configuration>
+       <defaultOptions>
+          <noAddressBinding>true</noAddressBinding>
+      </defaultOptions>
+     </configuration>
+  </plugin>
 
 Le code généré par ce plugin est placé dans le répertoire
 target/generated-sources/cxf. Il s'agit également d'une convention de
@@ -893,67 +808,37 @@ nous fait mettre un pied en dehors du monde Java.link:#_ftn17[[17]]
 
 Listing 3.1 : Production d'un binaire SWF
 
-<project>
-
-   <modelVersion>4.0.0</modelVersion>
-
-   <groupId>fr.noubliepaslalistedescourses</groupId>
-
-   <artifactId>ihm-flash</artifactId>
-
-   <version>1.0</version>
-
-   <packaging>swf</packaging>
-
- 
-
-   <build>
-
-      <sourceDirectory>src/main/flex</sourceDirectory>
-
-      <testSourceDirectory>src/test/flex</testSourceDirectory>
-
-      <plugins>
-
-         <plugin>
-
-            <groupId>org.sonatype.flexmojos</groupId>
-
-            <artifactId>flexmojos-maven-plugin</artifactId>
-
-            <version>4.0-beta-5</version>
-
-            <extensions>true</extensions>
-
- 
-
-         </plugin>
-
-      </plugins>
-
-   </build>
-
-   <dependencies>
-
-      <!-- Flex SDK dependencies -->
-
-      <dependency>
-
-         <groupId>com.adobe.flex.framework</groupId>
-
-         <artifactId>flex-framework</artifactId>
-
-         <version>4.5.0.18623</version>
-
-         <type>pom</type>
-
-      </dependency>
-
-      ...
-
-   </dependencies>
-
-</project>
+  <project>
+     <modelVersion>4.0.0</modelVersion>
+     <groupId>fr.noubliepaslalistedescourses</groupId>
+     <artifactId>ihm-flash</artifactId>
+     <version>1.0</version>
+     <packaging>swf</packaging>
+   
+     <build>
+        <sourceDirectory>src/main/flex</sourceDirectory>
+        <testSourceDirectory>src/test/flex</testSourceDirectory>
+        <plugins>
+           <plugin>
+              <groupId>org.sonatype.flexmojos</groupId>
+              <artifactId>flexmojos-maven-plugin</artifactId>
+              <version>4.0-beta-5</version>
+              <extensions>true</extensions>
+           </plugin>
+        </plugins>
+     </build>
+  
+     <dependencies>
+        <!-- Flex SDK dependencies -->
+        <dependency>
+           <groupId>com.adobe.flex.framework</groupId>
+           <artifactId>flex-framework</artifactId>
+           <version>4.5.0.18623</version>
+           <type>pom</type>
+        </dependency>
+        ...
+     </dependencies>
+  </project>
 
 Note
 
@@ -1022,18 +907,12 @@ qui héberge la documentation et le dépôt Maven du plugin directement
 dans son Subversion. Pour utiliser un dépôt non standard de plugins, il
 nous faut ajouter au projet la déclaration adéquate :
 
-   <pluginRepositories>
-
-      <pluginRepository>
-
-         <id>onejar-maven-plugin.googlecode.com</id>
-
-        
-<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-
-      </pluginRepository>
-
-   </pluginRepositories>
+     <pluginRepositories>
+        <pluginRepository>
+           <id>onejar-maven-plugin.googlecode.com</id>
+          <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+        </pluginRepository>
+     </pluginRepositories>
 
 De très nombreux plugins vivent indépendamment, développés sur les
 services d'hébergement SourceForge, Googlecode, GitHub, ou par des
